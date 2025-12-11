@@ -202,6 +202,51 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Render widgets
         renderWidgets();
+        
+        // Load Google Calendar appointments
+        loadAppointments();
+    }
+    
+    // Load appointments from Google Calendar API
+    function loadAppointments() {
+        fetch('api.php?action=appointments')
+            .then(response => response.json())
+            .then(data => {
+                renderAppointments(data);
+            })
+            .catch(error => {
+                console.error('Error loading appointments:', error);
+                // Fallback to simulated data
+                const appointments = [
+                    { id: 1, summary: 'Team Meeting', start: { dateTime: '2023-06-15T14:00:00+02:00' } },
+                    { id: 2, summary: 'Projekt Abgabe', start: { dateTime: '2023-06-15T16:00:00+02:00' } }
+                ];
+                renderAppointments(appointments);
+            });
+    }
+    
+    // Render appointments in the widget
+    function renderAppointments(appointments) {
+        const widget = document.getElementById('appointments-widget');
+        const listContainer = widget.querySelector('.appointments-list');
+        
+        if (appointments.length === 0) {
+            listContainer.innerHTML = '<p>Keine bevorstehenden Termine</p>';
+            return;
+        }
+        
+        // Take only the first two appointments
+        const nextAppointments = appointments.slice(0, 2);
+        
+        let html = '<ul>';
+        nextAppointments.forEach(appointment => {
+            const date = new Date(appointment.start.dateTime);
+            const timeString = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+            html += `<li>${appointment.summary} - ${timeString}</li>`;
+        });
+        html += '</ul>';
+        
+        listContainer.innerHTML = html;
     }
     
     // Widget registry

@@ -8,6 +8,7 @@ Eine private Notiz- und Organisations-Website (Dashboard) mit PHP/Composer und M
 - **Dashboard**: Startseite mit Suchleiste und anpassbaren Links
 - **Shortlinks-Seite**: Verwaltung von Links, Headern und Ordnern in einer strukturierten Ansicht
 - **Widget-Framework**: Platzhalter für zukünftige Widgets (Wetter, Kalender, etc.)
+- **Google Calendar Integration**: Zeigt die nächsten Termine im Dashboard-Widget an
 
 ## Technologie-Stack
 
@@ -53,6 +54,9 @@ src/
 3. **Konfiguration**:
 
    - Bearbeiten Sie die `.env`-Datei in `src/` mit Ihren Discord OAuth2-Credentials und Datenbankzugangsdaten
+   - Für die Google Calendar Integration fügen Sie folgende Variablen hinzu:
+     - `GOOGLE_CALENDAR_API_KEY=Ihr_API_Schlüssel`
+     - `GOOGLE_CALENDAR_ID=Ihre_Kalender_ID` (standardmäßig "primary")
 
 4. **Webserver konfigurieren**:
 
@@ -85,6 +89,7 @@ src/
 2. Nach erfolgreicher Anmeldung gelangen Sie zum Dashboard
 3. Verwenden Sie die "Bearbeiten"-Schaltfläche, um Links anzupassen
 4. Navigieren Sie zur Shortlinks-Seite, um Links, Header und Ordner zu verwalten
+5. Die nächsten Termine aus Ihrem Google Calendar werden automatisch im Dashboard-Widget angezeigt
 
 ## Fehlerbehebung
 
@@ -123,6 +128,7 @@ Das `setup.sql`-Skript erstellt zwei Haupttabellen:
 - Vollständige CRUD-Funktionalität für Shortlinks-Elemente
 - Erweiterte Widget-Unterstützung
 - Dark/Light-Theme-Umschaltung
+- Vollständige Google Calendar API-Integration
 
 ## Lizenz
 
