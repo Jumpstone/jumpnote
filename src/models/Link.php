@@ -86,4 +86,13 @@ class Link {
         }
         return false;
     }
+    
+    // Get the next sort order value
+    public function getNextSortOrder() {
+        $query = "SELECT COALESCE(MAX(sort_order), 0) + 1 AS next_order FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['next_order'];
+    }
 }

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // DOM Elements
     const editToggle = document.getElementById('edit-toggle');
+    const addLinkBtn = document.getElementById('add-link-btn');
     const editOverlay = document.getElementById('edit-overlay');
     const cancelEdit = document.getElementById('cancel-edit');
     const editLinkForm = document.getElementById('edit-link-form');
@@ -29,9 +30,28 @@ document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     });
     
+    // Add new link
+    addLinkBtn.addEventListener('click', function() {
+        currentEditLink = null; // Indicates we're adding a new link
+        
+        // Clear form values
+        document.getElementById('edit-link-id').value = '';
+        document.getElementById('edit-link-name').value = '';
+        document.getElementById('edit-link-url').value = '';
+        document.getElementById('edit-link-icon').value = '';
+        
+        // Change modal title
+        document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Neuen Link hinzufügen';
+        
+        editOverlay.classList.remove('hidden');
+        lucide.createIcons();
+    });
+    
     // Cancel edit
     cancelEdit.addEventListener('click', function() {
         editOverlay.classList.add('hidden');
+        // Reset modal title
+        document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Link bearbeiten';
     });
     
     // Handle form submission
@@ -72,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // For now, we'll just simulate it
         currentEditLink = linkId;
         
+        // Change modal title
+        document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Link bearbeiten';
+        
         // Set form values (simulated)
         document.getElementById('edit-link-id').value = linkId;
         document.getElementById('edit-link-name').value = 'Example Link';
@@ -88,13 +111,43 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = document.getElementById('edit-link-url').value;
         const icon = document.getElementById('edit-link-icon').value;
         
-        // In a real implementation, you would send the data to the server
-        fetch('api.php?action=links', {
-            method: 'POST',
+        // Validation
+        if (!name || !url) {
+            alert('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+        
+        // Validate URL format
+        try {
+            new URL(url);
+        } catch (e) {
+            alert('Bitte geben Sie eine gültige URL ein.');
+            return;
+        }
+        
+        // Prepare data
+        const data = {
+            name: name,
+            url: url,
+            icon_url: icon || ''
+        };
+        
+        // Determine if we're creating or updating
+        let method = 'POST';
+        let action = 'links';
+        if (linkId) {
+            // Updating existing link
+            data.id = linkId;
+            method = 'PUT';
+        }
+        
+        // Send data to server
+        fetch('api.php?action=' + action, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: linkId, name: name, url: url, icon: icon })
+            body: JSON.stringify(data)
         })
         .then(response => response.json())
         .then(data => {
@@ -108,6 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error saving link:', error);
             editOverlay.classList.add('hidden');
+            // For demo purposes, still reload links even if server error
+            loadLinks();
             alert('Änderungen gespeichert! (In einer echten Implementierung würden diese Änderungen auf dem Server gespeichert werden)');
         });
     }
@@ -215,6 +270,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             linksContainer.appendChild(linkCard);
         });
+        
+        // Re-enable edit features if in edit mode
+        if (isEditMode) {
+            enableEditFeatures();
+        }
         
         lucide.createIcons();
     }

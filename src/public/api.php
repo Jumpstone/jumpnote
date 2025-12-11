@@ -42,16 +42,16 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 switch ($method) {
     case 'GET':
-        handleGetRequest($action);
+        handleGetRequest($action, $db);
         break;
     case 'POST':
-        handlePostRequest($action);
+        handlePostRequest($action, $db);
         break;
     case 'PUT':
-        handlePutRequest($action);
+        handlePutRequest($action, $db);
         break;
     case 'DELETE':
-        handleDeleteRequest($action);
+        handleDeleteRequest($action, $db);
         break;
     default:
         http_response_code(405);
@@ -59,9 +59,7 @@ switch ($method) {
         break;
 }
 
-function handleGetRequest($action) {
-    global $db;
-    
+function handleGetRequest($action, $db) {
     switch ($action) {
         case 'links':
             $link = new Link($db);
@@ -108,9 +106,7 @@ function handleGetRequest($action) {
     }
 }
 
-function handlePostRequest($action) {
-    global $db;
-    
+function handlePostRequest($action, $db) {
     switch ($action) {
         case 'links':
             $link = new Link($db);
@@ -118,13 +114,28 @@ function handlePostRequest($action) {
             // Get posted data
             $data = json_decode(file_get_contents("php://input"));
             
+            // Validate required fields
+            if (!isset($data->name) || !isset($data->url)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Name and URL are required']);
+                return;
+            }
+            
             $link->name = $data->name;
             $link->url = $data->url;
-            $link->icon_url = $data->icon_url;
-            $link->sort_order = $data->sort_order;
+            $link->icon_url = isset($data->icon_url) ? $data->icon_url : '';
+            $link->sort_order = isset($data->sort_order) ? $data->sort_order : $link->getNextSortOrder();
             
             if ($link->create()) {
-                echo json_encode(['success' => true, 'message' => 'Link created successfully']);
+                // Return the created link with its ID
+                $createdLink = [
+                    'id' => $db->lastInsertId(),
+                    'name' => $link->name,
+                    'url' => $link->url,
+                    'icon' => $link->icon_url,
+                    'sort_order' => $link->sort_order
+                ];
+                echo json_encode(['success' => true, 'message' => 'Link created successfully', 'link' => $createdLink]);
             } else {
                 http_response_code(503);
                 echo json_encode(['success' => false, 'message' => 'Unable to create link']);
@@ -161,9 +172,7 @@ function handlePostRequest($action) {
     }
 }
 
-function handlePutRequest($action) {
-    global $db;
-    
+function handlePutRequest($action, $db) {
     switch ($action) {
         case 'links':
             $link = new Link($db);
@@ -171,11 +180,18 @@ function handlePutRequest($action) {
             // Get posted data
             $data = json_decode(file_get_contents("php://input"));
             
+            // Validate required fields
+            if (!isset($data->id) || !isset($data->name) || !isset($data->url)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'ID, Name and URL are required']);
+                return;
+            }
+            
             $link->id = $data->id;
             $link->name = $data->name;
             $link->url = $data->url;
-            $link->icon_url = $data->icon_url;
-            $link->sort_order = $data->sort_order;
+            $link->icon_url = isset($data->icon_url) ? $data->icon_url : '';
+            $link->sort_order = isset($data->sort_order) ? $data->sort_order : 0;
             
             if ($link->update()) {
                 echo json_encode(['success' => true, 'message' => 'Link updated successfully']);
@@ -216,15 +232,21 @@ function handlePutRequest($action) {
     }
 }
 
-function handleDeleteRequest($action) {
-    global $db;
-    
+function handleDeleteRequest($action, $db) {
     switch ($action) {
         case 'links':
             $link = new Link($db);
             
             // Get ID from request
-            $link->id = isset($_GET['id']) ? $_GET['id'] : die();
+            $id = isset($_GET['id']) ? $_GET['id'] : null;
+            
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Link ID is required']);
+                return;
+            }
+            
+            $link->id = $id;
             
             if ($link->delete()) {
                 echo json_encode(['success' => true, 'message' => 'Link deleted successfully']);

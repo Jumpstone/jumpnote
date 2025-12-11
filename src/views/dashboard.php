@@ -15,6 +15,9 @@
             <button id="edit-toggle" class="header-btn">
                 <i data-lucide="edit"></i> Bearbeiten
             </button>
+            <button id="add-link-btn" class="header-btn">
+                <i data-lucide="plus"></i> Link hinzufügen
+            </button>
             <a href="logout.php" class="header-btn">
                 <i data-lucide="log-out"></i> Abmelden
             </a>
