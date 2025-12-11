@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortlinks - JumpNote</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <div class="grid-bg"></div>
@@ -84,6 +84,6 @@
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../assets/js/shortlinks.js"></script>
+    <script src="/assets/js/shortlinks.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JumpNote Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <div class="grid-bg"></div>
@@ -82,6 +82,6 @@
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../assets/js/dashboard.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
 </body>
 </html>
