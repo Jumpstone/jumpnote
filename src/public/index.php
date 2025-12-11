@@ -1,8 +1,8 @@
 <?php
-require_once '../../vendor/autoload.php';
-require_once '../includes/DotEnv.php';
-require_once '../includes/Database.php';
-require_once '../controllers/DashboardController.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../includes/DotEnv.php';
+require_once __DIR__ . '/../includes/Database.php';
+require_once __DIR__ . '/../controllers/DashboardController.php';
 
 // Load environment variables
 try {

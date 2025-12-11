@@ -1,9 +1,9 @@
 <?php
-require_once '../../vendor/autoload.php';
-require_once '../includes/DotEnv.php';
-require_once '../includes/Database.php';
-require_once '../models/Link.php';
-require_once '../models/ShortlinkElement.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../includes/DotEnv.php';
+require_once __DIR__ . '/../includes/Database.php';
+require_once __DIR__ . '/../models/Link.php';
+require_once __DIR__ . '/../models/ShortlinkElement.php';
 
 // Load environment variables
 try {

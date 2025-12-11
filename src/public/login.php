@@ -1,6 +1,6 @@
 <?php
-require_once '../../vendor/autoload.php';
-require_once '../includes/DotEnv.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../includes/DotEnv.php';
 
 // Load environment variables
 try {
