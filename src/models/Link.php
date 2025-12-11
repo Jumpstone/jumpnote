@@ -22,6 +22,15 @@ class Link {
         return $stmt;
     }
 
+    // Get a link by ID
+    public function getById($id) {
+        $query = "SELECT id, name, url, icon_url, sort_order FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt;
+    }
+
     // Create a link
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET name=:name, url=:url, icon_url=:icon_url, sort_order=:sort_order";

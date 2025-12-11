@@ -80,20 +80,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Open edit modal
     function openEditModal(linkId) {
-        // In a real implementation, you would fetch the link data from the server
-        // For now, we'll just simulate it
-        currentEditLink = linkId;
-        
-        // Change modal title
-        document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Link bearbeiten';
-        
-        // Set form values (simulated)
-        document.getElementById('edit-link-id').value = linkId;
-        document.getElementById('edit-link-name').value = 'Example Link';
-        document.getElementById('edit-link-url').value = 'https://example.com';
-        document.getElementById('edit-link-icon').value = '';
-        
-        editOverlay.classList.remove('hidden');
+        // Fetch the actual link data from the server
+        fetch(`api.php?action=links&id=${linkId}`)
+            .then(response => response.json())
+            .then(link => {
+                currentEditLink = linkId;
+                
+                // Change modal title
+                document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Link bearbeiten';
+                
+                // Set form values with actual data
+                document.getElementById('edit-link-id').value = link.id;
+                document.getElementById('edit-link-name').value = link.name;
+                document.getElementById('edit-link-url').value = link.url;
+                document.getElementById('edit-link-icon').value = link.icon || '';
+                
+                editOverlay.classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error fetching link data:', error);
+                alert('Fehler beim Laden der Linkdaten');
+            });
     }
     
     // Save link changes

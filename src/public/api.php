@@ -62,11 +62,35 @@ switch ($method) {
 function handleGetRequest($action, $db) {
     switch ($action) {
         case 'links':
-            // Use the DashboardController to get links
-            require_once __DIR__ . '/../controllers/DashboardController.php';
-            $controller = new DashboardController($db);
-            $links = $controller->getLinks();
-            echo json_encode($links);
+            // Check if a specific link ID is requested
+            $linkId = isset($_GET['id']) ? $_GET['id'] : null;
+            
+            if ($linkId) {
+                // Get a specific link by ID
+                $link = new Link($db);
+                $stmt = $link->getById($linkId);
+                $linkData = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($linkData) {
+                    $linkArray = [
+                        'id' => $linkData['id'],
+                        'name' => $linkData['name'],
+                        'url' => $linkData['url'],
+                        'icon' => $linkData['icon_url'],
+                        'sort_order' => $linkData['sort_order']
+                    ];
+                    echo json_encode($linkArray);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(['error' => 'Link not found']);
+                }
+            } else {
+                // Get all links
+                require_once __DIR__ . '/../controllers/DashboardController.php';
+                $controller = new DashboardController($db);
+                $links = $controller->getLinks();
+                echo json_encode($links);
+            }
             break;
             
         case 'shortlink_elements':
