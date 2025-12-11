@@ -1,0 +1,17 @@
+[Unit]
+Description=JumpNote PHP Application
+After=network.target mysql.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=www-data
+Group=www-data
+ExecStart=/usr/bin/php /var/www/jumpnote/src/public/index.php start
+ExecReload=/usr/bin/php /var/www/jumpnote/src/public/index.php reload
+ExecStop=/usr/bin/php /var/www/jumpnote/src/public/index.php stop
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
