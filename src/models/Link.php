@@ -11,11 +11,18 @@ class Link {
     public $sort_order;
 
     public function __construct($db) {
+        if ($db === null) {
+            throw new Exception("Database connection is null");
+        }
         $this->conn = $db;
     }
 
     // Get all links
     public function getAll() {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "SELECT id, name, url, icon_url, sort_order FROM " . $this->table_name . " ORDER BY sort_order";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -24,6 +31,10 @@ class Link {
 
     // Get a link by ID
     public function getById($id) {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "SELECT id, name, url, icon_url, sort_order FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -33,6 +44,10 @@ class Link {
 
     // Create a link
     public function create() {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "INSERT INTO " . $this->table_name . " SET name=:name, url=:url, icon_url=:icon_url, sort_order=:sort_order";
         $stmt = $this->conn->prepare($query);
 
@@ -56,6 +71,10 @@ class Link {
 
     // Update a link
     public function update() {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "UPDATE " . $this->table_name . " SET name=:name, url=:url, icon_url=:icon_url, sort_order=:sort_order WHERE id=:id";
         $stmt = $this->conn->prepare($query);
 
@@ -81,6 +100,10 @@ class Link {
 
     // Delete a link
     public function delete() {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "DELETE FROM " . $this->table_name . " WHERE id=:id";
         $stmt = $this->conn->prepare($query);
 
@@ -98,6 +121,10 @@ class Link {
     
     // Get the next sort order value
     public function getNextSortOrder() {
+        if ($this->conn === null) {
+            throw new Exception("Database connection is null");
+        }
+        
         $query = "SELECT COALESCE(MAX(sort_order), 0) + 1 AS next_order FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

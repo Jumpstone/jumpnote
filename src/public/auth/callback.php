@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../includes/DotEnv.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../includes/DotEnv.php';
 
 // Load environment variables
 try {
-    DotEnv::load(__DIR__ . '/../.env');
+    DotEnv::load(__DIR__ . '/../../.env');
 } catch (Exception $e) {
     die("Error loading .env file: " . $e->getMessage());
 }
@@ -61,17 +61,10 @@ if (isset($_GET['code'])) {
     $_SESSION['user_id'] = $userData['id'];
     
     // Redirect to dashboard
-    header('Location: index.php');
+    header('Location: /index.php');
+    exit();
+} else {
+    // If no code parameter, redirect to login
+    header('Location: /login.php');
     exit();
 }
-
-// If not receiving a callback, redirect to Discord for authentication
-$authUrl = 'https://discord.com/api/oauth2/authorize?' . http_build_query([
-    'client_id' => $_ENV['DISCORD_CLIENT_ID'],
-    'redirect_uri' => 'https://jumpnote.jumpstone4477.de/auth/callback',
-    'response_type' => 'code',
-    'scope' => 'identify'
-]);
-
-header('Location: ' . $authUrl);
-exit();

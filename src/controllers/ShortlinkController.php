@@ -4,6 +4,9 @@ class ShortlinkController {
     private $db;
     
     public function __construct($database) {
+        if ($database === null) {
+            throw new Exception("Database connection is null");
+        }
         $this->db = $database;
     }
     

@@ -10,7 +10,7 @@ try {
     DotEnv::load(__DIR__ . '/../.env');
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Environment configuration error']);
+    echo json_encode(['error' => 'Environment configuration error: ' . $e->getMessage()]);
     exit();
 }
 
@@ -31,8 +31,18 @@ if ($_SESSION['user_id'] != $_ENV['ALLOWED_USER_ID']) {
 }
 
 // Initialize database connection
-$database = new Database();
-$db = $database->getConnection();
+try {
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    if ($db === null) {
+        throw new Exception("Database connection is null");
+    }
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Database connection error: ' . $e->getMessage()]);
+    exit();
+}
 
 // Handle API requests
 header('Content-Type: application/json');
@@ -94,24 +104,29 @@ function handleGetRequest($action, $db) {
             break;
             
         case 'shortlink_elements':
-            $element = new ShortlinkElement($db);
-            $stmt = $element->getAll();
-            $elements = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                extract($row);
-                $elements[] = [
-                    'id' => $id,
-                    'name' => $name,
-                    'url' => $url,
-                    'icon_url' => $icon_url,
-                    'description' => $description,
-                    'element_type' => $element_type,
-                    'parent_id' => $parent_id,
-                    'section_id' => $section_id,
-                    'sort_order' => $sort_order
-                ];
+            try {
+                $element = new ShortlinkElement($db);
+                $stmt = $element->getAll();
+                $elements = [];
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+                    $elements[] = [
+                        'id' => $id,
+                        'name' => $name,
+                        'url' => $url,
+                        'icon_url' => $icon_url,
+                        'description' => $description,
+                        'element_type' => $element_type,
+                        'parent_id' => $parent_id,
+                        'section_id' => $section_id,
+                        'sort_order' => $sort_order
+                    ];
+                }
+                echo json_encode($elements);
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['error' => 'Error fetching elements: ' . $e->getMessage()]);
             }
-            echo json_encode($elements);
             break;
             
         default:
@@ -158,25 +173,30 @@ function handlePostRequest($action, $db) {
             break;
             
         case 'shortlink_elements':
-            $element = new ShortlinkElement($db);
-            
-            // Get posted data
-            $data = json_decode(file_get_contents("php://input"));
-            
-            $element->name = $data->name;
-            $element->url = $data->url;
-            $element->icon_url = $data->icon_url;
-            $element->description = $data->description;
-            $element->element_type = $data->element_type;
-            $element->parent_id = $data->parent_id;
-            $element->section_id = $data->section_id;
-            $element->sort_order = $data->sort_order;
-            
-            if ($element->create()) {
-                echo json_encode(['success' => true, 'message' => 'Element created successfully']);
-            } else {
-                http_response_code(503);
-                echo json_encode(['success' => false, 'message' => 'Unable to create element']);
+            try {
+                $element = new ShortlinkElement($db);
+                
+                // Get posted data
+                $data = json_decode(file_get_contents("php://input"));
+                
+                $element->name = $data->name;
+                $element->url = $data->url;
+                $element->icon_url = $data->icon_url;
+                $element->description = $data->description;
+                $element->element_type = $data->element_type;
+                $element->parent_id = $data->parent_id;
+                $element->section_id = $data->section_id;
+                $element->sort_order = $data->sort_order;
+                
+                if ($element->create()) {
+                    echo json_encode(['success' => true, 'message' => 'Element created successfully']);
+                } else {
+                    http_response_code(503);
+                    echo json_encode(['success' => false, 'message' => 'Unable to create element']);
+                }
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Error creating element: ' . $e->getMessage()]);
             }
             break;
             
@@ -217,26 +237,31 @@ function handlePutRequest($action, $db) {
             break;
             
         case 'shortlink_elements':
-            $element = new ShortlinkElement($db);
-            
-            // Get posted data
-            $data = json_decode(file_get_contents("php://input"));
-            
-            $element->id = $data->id;
-            $element->name = $data->name;
-            $element->url = $data->url;
-            $element->icon_url = $data->icon_url;
-            $element->description = $data->description;
-            $element->element_type = $data->element_type;
-            $element->parent_id = $data->parent_id;
-            $element->section_id = $data->section_id;
-            $element->sort_order = $data->sort_order;
-            
-            if ($element->update()) {
-                echo json_encode(['success' => true, 'message' => 'Element updated successfully']);
-            } else {
-                http_response_code(503);
-                echo json_encode(['success' => false, 'message' => 'Unable to update element']);
+            try {
+                $element = new ShortlinkElement($db);
+                
+                // Get posted data
+                $data = json_decode(file_get_contents("php://input"));
+                
+                $element->id = $data->id;
+                $element->name = $data->name;
+                $element->url = $data->url;
+                $element->icon_url = $data->icon_url;
+                $element->description = $data->description;
+                $element->element_type = $data->element_type;
+                $element->parent_id = $data->parent_id;
+                $element->section_id = $data->section_id;
+                $element->sort_order = $data->sort_order;
+                
+                if ($element->update()) {
+                    echo json_encode(['success' => true, 'message' => 'Element updated successfully']);
+                } else {
+                    http_response_code(503);
+                    echo json_encode(['success' => false, 'message' => 'Unable to update element']);
+                }
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Error updating element: ' . $e->getMessage()]);
             }
             break;
             
@@ -272,16 +297,21 @@ function handleDeleteRequest($action, $db) {
             break;
             
         case 'shortlink_elements':
-            $element = new ShortlinkElement($db);
-            
-            // Get ID from request
-            $element->id = isset($_GET['id']) ? $_GET['id'] : die();
-            
-            if ($element->delete()) {
-                echo json_encode(['success' => true, 'message' => 'Element deleted successfully']);
-            } else {
-                http_response_code(503);
-                echo json_encode(['success' => false, 'message' => 'Unable to delete element']);
+            try {
+                $element = new ShortlinkElement($db);
+                
+                // Get ID from request
+                $element->id = isset($_GET['id']) ? $_GET['id'] : die();
+                
+                if ($element->delete()) {
+                    echo json_encode(['success' => true, 'message' => 'Element deleted successfully']);
+                } else {
+                    http_response_code(503);
+                    echo json_encode(['success' => false, 'message' => 'Unable to delete element']);
+                }
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Error deleting element: ' . $e->getMessage()]);
             }
             break;
             
