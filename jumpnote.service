@@ -7,9 +7,9 @@ Type=oneshot
 RemainAfterExit=yes
 User=www-data
 Group=www-data
-ExecStart=/usr/bin/php /var/www/jumpnote/src/public/index.php start
-ExecReload=/usr/bin/php /var/www/jumpnote/src/public/index.php reload
-ExecStop=/usr/bin/php /var/www/jumpnote/src/public/index.php stop
+ExecStart=/usr/bin/php /var/www/web/jumpnote/src/public/index.php start
+ExecReload=/usr/bin/php /var/www/web/jumpnote/src/public/index.php reload
+ExecStop=/usr/bin/php /var/www/web/jumpnote/src/public/index.php stop
 StandardOutput=journal
 StandardError=journal
 
