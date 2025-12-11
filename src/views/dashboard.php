@@ -23,7 +23,7 @@
     <div class="container">
         <section class="hero">
             <div class="search-container centered">
-                <form id="search-form" action="https://www.google.com/search" method="get" target="_blank">
+                <form id="search-form" action="https://www.google.com/search" method="get">
                     <input type="text" name="q" id="search-input" placeholder="Suche in Google..." autocomplete="off">
                     <button type="submit" class="search-btn">
                         <i data-lucide="search"></i>
