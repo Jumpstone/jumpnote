@@ -15,18 +15,11 @@ class ShortlinkElement {
     public $sort_order;
 
     public function __construct($db) {
-        if ($db === null) {
-            throw new Exception("Database connection is null");
-        }
         $this->conn = $db;
     }
 
     // Get all elements
     public function getAll() {
-        if ($this->conn === null) {
-            throw new Exception("Database connection is null");
-        }
-        
         $query = "SELECT id, name, url, icon_url, description, element_type, parent_id, section_id, sort_order 
                   FROM " . $this->table_name . " 
                   ORDER BY COALESCE(section_id, id), sort_order";
@@ -37,10 +30,6 @@ class ShortlinkElement {
 
     // Create an element
     public function create() {
-        if ($this->conn === null) {
-            throw new Exception("Database connection is null");
-        }
-        
         $query = "INSERT INTO " . $this->table_name . " 
                   SET name=:name, url=:url, icon_url=:icon_url, description=:description, 
                       element_type=:element_type, parent_id=:parent_id, section_id=:section_id, sort_order=:sort_order";
@@ -74,10 +63,6 @@ class ShortlinkElement {
 
     // Update an element
     public function update() {
-        if ($this->conn === null) {
-            throw new Exception("Database connection is null");
-        }
-        
         $query = "UPDATE " . $this->table_name . " 
                   SET name=:name, url=:url, icon_url=:icon_url, description=:description, 
                       element_type=:element_type, parent_id=:parent_id, section_id=:section_id, sort_order=:sort_order 
@@ -114,10 +99,6 @@ class ShortlinkElement {
 
     // Delete an element
     public function delete() {
-        if ($this->conn === null) {
-            throw new Exception("Database connection is null");
-        }
-        
         $query = "DELETE FROM " . $this->table_name . " WHERE id=:id";
         $stmt = $this->conn->prepare($query);
 

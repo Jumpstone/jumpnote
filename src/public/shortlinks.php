@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../includes/DotEnv.php';
+require_once __DIR__ '/../../vendor/autoload.php';
+require_once __DIR__ '/../includes/DotEnv.php';
 require_once __DIR__ . '/../includes/Database.php';
 require_once __DIR__ . '/../controllers/ShortlinkController.php';
 
@@ -8,7 +8,6 @@ require_once __DIR__ . '/../controllers/ShortlinkController.php';
 try {
     DotEnv::load(__DIR__ . '/../.env');
 } catch (Exception $e) {
-    http_response_code(500);
     die("Error loading .env file: " . $e->getMessage());
 }
 
@@ -30,26 +29,11 @@ if ($_SESSION['user_id'] != $_ENV['ALLOWED_USER_ID']) {
 }
 
 // Initialize database connection
-try {
-    $database = new Database();
-    $db = $database->getConnection();
-} catch (Exception $e) {
-    http_response_code(500);
-    die("Database connection error: " . $e->getMessage());
-}
+$database = new Database();
+$db = $database->getConnection();
 
 // Initialize controller
-try {
-    $controller = new ShortlinkController($db);
-} catch (Exception $e) {
-    http_response_code(500);
-    die("Controller initialization error: " . $e->getMessage());
-}
+$controller = new ShortlinkController($db);
 
 // User is authenticated and allowed, show shortlinks page
-try {
-    $controller->index();
-} catch (Exception $e) {
-    http_response_code(500);
-    die("Error rendering page: " . $e->getMessage());
-}
+$controller->index();
