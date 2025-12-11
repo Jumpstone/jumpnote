@@ -18,7 +18,7 @@ if (isset($_GET['code'])) {
         'client_secret' => $_ENV['DISCORD_CLIENT_SECRET'],
         'grant_type' => 'authorization_code',
         'code' => $_GET['code'],
-        'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login.php'
+        'redirect_uri' => 'https://' . $_SERVER['HTTP_HOST'] . '/login.php'
     ];
 
     $options = [
@@ -68,7 +68,7 @@ if (isset($_GET['code'])) {
 // If not receiving a callback, redirect to Discord for authentication
 $authUrl = 'https://discord.com/api/oauth2/authorize?' . http_build_query([
     'client_id' => $_ENV['DISCORD_CLIENT_ID'],
-    'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login.php',
+    'redirect_uri' => 'https://' . $_SERVER['HTTP_HOST'] . '/login.php',
     'response_type' => 'code',
     'scope' => 'identify'
 ]);

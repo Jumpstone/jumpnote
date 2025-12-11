@@ -74,10 +74,10 @@ src/
      - `sudo crontab -e`
      - Fügen Sie hinzu: `0 12 * * * /bin/bash /var/www/jumpnote/letsencrypt-renew.sh`
 
-6. **Systemd-Service einrichten (optional)**:
-   - Kopieren Sie die `jumpnote.service` Datei nach `/etc/systemd/system/`
-   - Aktivieren Sie den Service: `sudo systemctl enable jumpnote.service`
-   - Starten Sie den Service: `sudo systemctl start jumpnote.service`
+6. **PHP-FPM konfigurieren**:
+   - Stellen Sie sicher, dass PHP-FPM installiert und aktiviert ist
+   - Überprüfen Sie, ob der Socket `/var/run/php/php8.2-fpm.sock` existiert
+   - Starten Sie PHP-FPM bei Bedarf neu: `sudo systemctl restart php8.2-fpm`
 
 ## Verwendung
 
@@ -85,6 +85,22 @@ src/
 2. Nach erfolgreicher Anmeldung gelangen Sie zum Dashboard
 3. Verwenden Sie die "Bearbeiten"-Schaltfläche, um Links anzupassen
 4. Navigieren Sie zur Shortlinks-Seite, um Links, Header und Ordner zu verwalten
+
+## Fehlerbehebung
+
+Wenn Sie einen 404-Fehler erhalten:
+
+1. Überprüfen Sie, ob die nginx-Konfiguration korrekt ist
+2. Stellen Sie sicher, dass die Dateien im richtigen Verzeichnis liegen (`/var/www/web/jumpnote`)
+3. Überprüfen Sie, ob PHP-FPM läuft: `sudo systemctl status php8.1-fpm`
+4. Prüfen Sie die nginx-Fehlerprotokolle: `sudo tail -f /var/log/nginx/error.log`
+5. Testen Sie die PHP-Konfiguration mit der `health.php`-Datei
+
+Wenn Sie Probleme mit der Discord-Authentifizierung haben:
+
+1. Stellen Sie sicher, dass die Redirect-URI in der Discord Developer Console mit Ihrer Domain übereinstimmt
+2. Überprüfen Sie, ob die Umgebungsvariablen in der `.env`-Datei korrekt gesetzt sind
+3. Vergewissern Sie sich, dass Sie HTTPS verwenden
 
 ## Discord OAuth2 Konfiguration
 

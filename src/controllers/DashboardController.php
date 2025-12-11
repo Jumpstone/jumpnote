@@ -10,7 +10,7 @@ class DashboardController {
     public function index() {
         // In a real implementation, you would fetch data from the database
         // For now, we'll just include the view
-        include '../views/dashboard.php';
+        include __DIR__ . '/../views/dashboard.php';
     }
     
     public function getLinks() {

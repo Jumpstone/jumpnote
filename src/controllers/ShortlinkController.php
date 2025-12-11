@@ -10,7 +10,7 @@ class ShortlinkController {
     public function index() {
         // In a real implementation, you would fetch data from the database
         // For now, we'll just include the view
-        include '../views/shortlinks.php';
+        include __DIR__ . '/../views/shortlinks.php';
     }
     
     public function getElements() {
