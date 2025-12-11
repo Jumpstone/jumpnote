@@ -23,10 +23,8 @@
 
     <div class="container">
         <section class="hero">
-            <h1>Willkommen bei <span class="hero-name">JumpNote</span></h1>
-            
-            <!-- Search Bar -->
-            <div class="search-container">
+            <!-- Centered Search Bar -->
+            <div class="search-container centered">
                 <form id="search-form" action="https://www.google.com/search" method="get" target="_blank">
                     <input type="text" name="q" id="search-input" placeholder="Suche in Google..." autocomplete="off">
                     <button type="submit" class="search-btn">
@@ -37,7 +35,7 @@
         </section>
 
         <!-- Custom Links Section -->
-        <section id="custom-links">
+        <section id="custom-links" class="centered-links">
             <h2>Ihre Verknüpfungen</h2>
             <div class="links-grid" id="links-container">
                 <!-- Links will be loaded here dynamically -->

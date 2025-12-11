@@ -152,12 +152,14 @@ a {
 
 /* --- HERO SECTION --- */
 .hero {
-  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   animation: fadeIn 1s ease-out;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 0;
 }
 
 .hero h1 {
@@ -175,7 +177,8 @@ a {
 /* --- SEARCH BAR --- */
 .search-container {
   max-width: 600px;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  width: 100%;
 }
 
 #search-form {
@@ -219,6 +222,9 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 1.5rem;
+  justify-content: center;
+  max-width: 800px;
+  width: 100%;
 }
 
 .link-card {
@@ -564,4 +570,26 @@ a {
   .header-content {
     justify-content: space-between;
   }
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.centered-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.centered-links h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.centered-links {
+  padding-top: 20px;
 }
