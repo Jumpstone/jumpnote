@@ -9,7 +9,6 @@
 <body>
     <div class="grid-bg"></div>
     
-    <!-- Header with edit button -->
     <header class="header-nav">
         <div class="header-content">
             <button id="edit-toggle" class="header-btn">
@@ -23,7 +22,6 @@
 
     <div class="container">
         <section class="hero">
-            <!-- Centered Search Bar -->
             <div class="search-container centered">
                 <form id="search-form" action="https://www.google.com/search" method="get" target="_blank">
                     <input type="text" name="q" id="search-input" placeholder="Suche in Google..." autocomplete="off">
@@ -34,26 +32,20 @@
             </div>
         </section>
 
-        <!-- Custom Links Section -->
         <section id="custom-links" class="centered-links">
-            <h2>Ihre Verknüpfungen</h2>
             <div class="links-grid" id="links-container">
-                <!-- Links will be loaded here dynamically -->
-            </div>
+                </div>
         </section>
 
-        <!-- Widgets Section -->
         <section id="widgets">
-            <h2>Widgets</h2>
             <div class="widgets-container">
                 <div class="widget-placeholder">
-                    <p>Widget-Bereich (Platzhalter für zukünftige Widgets)</p>
+                    <p>Widget-Bereich</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Edit Mode Overlay -->
     <div id="edit-overlay" class="edit-overlay hidden">
         <div class="edit-modal">
             <h3>Link bearbeiten</h3>
