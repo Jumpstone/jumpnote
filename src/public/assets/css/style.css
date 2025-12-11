@@ -195,58 +195,58 @@ a {
 
 /* --- CUSTOM LINKS --- */
 .centered-links {
-    width: 100%;
+  width: 100%;
 }
 
 .links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 160px)); /* Optimiert */
-    gap: 1.5rem;
-    justify-content: center;
-    max-width: 900px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 160px)); /* Optimiert */
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 900px;
+  width: 100%;
 }
 
 .link-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: 0.3s;
-    position: relative;
-    cursor: pointer;
-    height: 140px; /* Einheitliche Höhe */
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  cursor: pointer;
+  height: 140px; /* Einheitliche Höhe */
 }
 
 .link-card:hover {
-    border-color: var(--text-muted);
-    transform: translateY(-5px);
-    background: #18181b;
+  border-color: var(--text-muted);
+  transform: translateY(-5px);
+  background: #18181b;
 }
 
 .link-icon {
-    width: 45px;
-    height: 45px;
-    background: #1e1e1e;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-primary);
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
+  width: 45px;
+  height: 45px;
+  background: #1e1e1e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
 }
 
 .link-name {
-    font-size: 0.85rem;
-    font-weight: 500;
-    font-family: var(--font-main);
-    color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: var(--font-main);
+  color: var(--text-main);
 }
 
 /* --- WIDGETS --- */
@@ -256,60 +256,19 @@ a {
 }
 
 .widgets-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.widget {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    min-width: 300px;
-    max-width: 400px;
-}
-
-.widget h3 {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    color: #fff;
-    text-align: center;
-}
-
-.appointments-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.appointments-list li {
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.95rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.appointments-list li:last-child {
-    border-bottom: none;
-}
-
-.appointment-placeholder {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .widget-placeholder {
-    background: transparent;
-    border: 1px dashed var(--border-color);
-    border-radius: 12px;
-    padding: 1rem 2rem;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.8rem;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
 /* --- EDIT MODE / OVERLAY (unverändert wichtig) --- */

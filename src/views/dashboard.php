@@ -39,13 +39,8 @@
 
         <section id="widgets">
             <div class="widgets-container">
-                <div class="widget" id="appointments-widget">
-                    <h3>Nächste Termine</h3>
-                    <div class="appointments-list">
-                        <div class="appointment-placeholder">
-                            <p>Lade Termine...</p>
-                        </div>
-                    </div>
+                <div class="widget-placeholder">
+                    <p>Widget-Bereich</p>
                 </div>
             </div>
         </section>

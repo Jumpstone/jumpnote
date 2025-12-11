@@ -4,7 +4,6 @@ require_once __DIR__ . '/../includes/DotEnv.php';
 require_once __DIR__ . '/../includes/Database.php';
 require_once __DIR__ . '/../models/Link.php';
 require_once __DIR__ . '/../models/ShortlinkElement.php';
-require_once __DIR__ . '/../models/Appointment.php';
 
 // Load environment variables
 try {
@@ -113,11 +112,6 @@ function handleGetRequest($action, $db) {
                 ];
             }
             echo json_encode($elements);
-            break;
-            
-        case 'appointments':
-            // Get upcoming appointments from Google Calendar
-            getUpcomingAppointments();
             break;
             
         default:
@@ -295,21 +289,5 @@ function handleDeleteRequest($action, $db) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid action']);
             break;
-    }
-}
-
-// Function to get upcoming appointments from Google Calendar
-function getUpcomingAppointments() {
-    try {
-        $appointment = new Appointment();
-        $appointments = $appointment->getUpcomingAppointments(10);
-        
-        // Filter to only the next 2 appointments
-        $nextAppointments = array_slice($appointments, 0, 2);
-        
-        echo json_encode($nextAppointments);
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to fetch appointments: ' . $e->getMessage()]);
     }
 }
