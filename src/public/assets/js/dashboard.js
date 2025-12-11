@@ -66,14 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const linkCards = document.querySelectorAll('.link-card');
         linkCards.forEach(card => {
             card.classList.add('edit-mode');
-            
-            // Add click event to edit links
-            card.addEventListener('click', function(e) {
-                if (e.target.closest('.link-card')) {
-                    const linkId = this.dataset.linkId;
-                    openEditModal(linkId);
-                }
-            });
         });
     }
     
@@ -176,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error loading links:', error);
-                // Fallback to simulated data
+                // Fallback to simulated data with URLs
                 const links = [
                     { id: 1, name: 'GitHub', url: 'https://github.com', icon: 'github' },
                     { id: 2, name: 'Gmail', url: 'https://gmail.com', icon: 'mail' },
@@ -267,6 +259,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="link-name">${link.name}</div>
             `;
+            
+            // Add click handler to open the link URL when not in edit mode
+            // Only add edit functionality when in edit mode
+            linkCard.addEventListener('click', function(e) {
+                if (isEditMode) {
+                    // In edit mode, open the edit modal
+                    const linkId = this.dataset.linkId;
+                    openEditModal(linkId);
+                } else {
+                    // Not in edit mode, open the link URL
+                    window.open(link.url, '_blank');
+                }
+            });
             
             linksContainer.appendChild(linkCard);
         });

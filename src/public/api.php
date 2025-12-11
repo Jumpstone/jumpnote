@@ -62,19 +62,10 @@ switch ($method) {
 function handleGetRequest($action, $db) {
     switch ($action) {
         case 'links':
-            $link = new Link($db);
-            $stmt = $link->getAll();
-            $links = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                extract($row);
-                $links[] = [
-                    'id' => $id,
-                    'name' => $name,
-                    'url' => $url,
-                    'icon' => $icon_url,
-                    'sort_order' => $sort_order
-                ];
-            }
+            // Use the DashboardController to get links
+            require_once __DIR__ . '/../controllers/DashboardController.php';
+            $controller = new DashboardController($db);
+            $links = $controller->getLinks();
             echo json_encode($links);
             break;
             
