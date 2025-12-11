@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // DOM Elements
     const editToggle = document.getElementById('edit-toggle');
-    const addLinkBtn = document.getElementById('add-link-btn');
     const editOverlay = document.getElementById('edit-overlay');
     const cancelEdit = document.getElementById('cancel-edit');
     const editLinkForm = document.getElementById('edit-link-form');
@@ -21,29 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isEditMode) {
             editToggle.innerHTML = '<i data-lucide="check"></i> Fertig';
-            enableEditFeatures();
         } else {
             editToggle.innerHTML = '<i data-lucide="edit"></i> Bearbeiten';
-            disableEditFeatures();
         }
         
-        lucide.createIcons();
-    });
-    
-    // Add new link
-    addLinkBtn.addEventListener('click', function() {
-        currentEditLink = null; // Indicates we're adding a new link
+        // Reload links to show/hide the add link card
+        loadLinks();
         
-        // Clear form values
-        document.getElementById('edit-link-id').value = '';
-        document.getElementById('edit-link-name').value = '';
-        document.getElementById('edit-link-url').value = '';
-        document.getElementById('edit-link-icon').value = '';
-        
-        // Change modal title
-        document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Neuen Link hinzufügen';
-        
-        editOverlay.classList.remove('hidden');
         lucide.createIcons();
     });
     
@@ -63,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enable edit features
     function enableEditFeatures() {
         // Add wobble effect to link cards
-        const linkCards = document.querySelectorAll('.link-card');
+        const linkCards = document.querySelectorAll('.link-card:not(.add-link-card)');
         linkCards.forEach(card => {
             card.classList.add('edit-mode');
         });
@@ -254,6 +237,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render links
     function renderLinks(links) {
         linksContainer.innerHTML = '';
+        
+        // Add the "Add Link" tile when in edit mode
+        if (isEditMode) {
+            const addLinkCard = document.createElement('div');
+            addLinkCard.className = 'link-card add-link-card';
+            addLinkCard.innerHTML = `
+                <div class="link-icon">
+                    <i data-lucide="plus"></i>
+                </div>
+                <div class="link-name">Link hinzufügen</div>
+            `;
+            
+            // Add click handler for adding a new link
+            addLinkCard.addEventListener('click', function() {
+                currentEditLink = null; // Indicates we're adding a new link
+                
+                // Clear form values
+                document.getElementById('edit-link-id').value = '';
+                document.getElementById('edit-link-name').value = '';
+                document.getElementById('edit-link-url').value = '';
+                document.getElementById('edit-link-icon').value = '';
+                
+                // Change modal title
+                document.querySelector('#edit-overlay .edit-modal h3').textContent = 'Neuen Link hinzufügen';
+                
+                editOverlay.classList.remove('hidden');
+                lucide.createIcons();
+            });
+            
+            linksContainer.appendChild(addLinkCard);
+        }
         
         links.forEach(link => {
             const linkCard = document.createElement('div');

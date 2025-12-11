@@ -80,6 +80,26 @@ body {
   gap: 10px;
 }
 
+.header-btn {
+  padding: 8px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-btn:hover {
+  background: var(--border-color);
+  color: #fff;
+}
+
 /* --- LAYOUT --- */
 .container {
   max-width: 1100px;
@@ -243,6 +263,25 @@ a {
   font-size: 0.9rem;
   font-weight: 600;
   font-family: var(--font-mono);
+}
+
+.add-link-card {
+  background: #dc2626; /* Red background */
+  border: 1px solid #b91c1c;
+}
+
+.add-link-card:hover {
+  background: #b91c1c;
+  border-color: #991b1b;
+}
+
+.add-link-card .link-icon {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.add-link-card .link-name {
+  color: white;
 }
 
 /* --- SHORTLINK ELEMENTS --- */
