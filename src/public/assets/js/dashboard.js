@@ -170,70 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Widget framework
-    function initWidgets() {
-        // In a real implementation, you would initialize widgets here
-        console.log('Widget framework initialized');
-        
-        // Example widget registration
-        registerWidget('weather', {
-            name: 'Wetter',
-            render: function(container) {
-                container.innerHTML = `
-                    <h3>Wetter</h3>
-                    <p>22°C, sonnig</p>
-                    <p>Köln, Deutschland</p>
-                `;
-            }
-        });
-        
-        registerWidget('calendar', {
-            name: 'Kalender',
-            render: function(container) {
-                container.innerHTML = `
-                    <h3>Kalender</h3>
-                    <ul>
-                        <li>Meeting - 14:00</li>
-                        <li>Projekt Abgabe - 16:00</li>
-                    </ul>
-                `;
-            }
-        });
-        
-        // Render widgets
-        renderWidgets();
-    }
-    
-    // Widget registry
-    const widgetRegistry = {};
-    
-    // Register a widget
-    function registerWidget(id, widget) {
-        widgetRegistry[id] = widget;
-    }
-    
-    // Render widgets
-    function renderWidgets() {
-        // In a real implementation, you would fetch widget configuration from the server
-        const widgetConfig = [
-            { id: 'weather', type: 'weather' },
-            { id: 'calendar', type: 'calendar' }
-        ];
-        
-        const widgetsContainer = document.querySelector('.widgets-container');
-        widgetsContainer.innerHTML = '';
-        
-        widgetConfig.forEach(config => {
-            if (widgetRegistry[config.type]) {
-                const widgetContainer = document.createElement('div');
-                widgetContainer.className = 'widget';
-                widgetsContainer.appendChild(widgetContainer);
-                
-                widgetRegistry[config.type].render(widgetContainer);
-            }
-        });
-    }
-    
     // Render links
     function renderLinks(links) {
         linksContainer.innerHTML = '';
@@ -307,5 +243,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize
     loadLinks();
-    initWidgets();
 });

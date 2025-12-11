@@ -36,14 +36,6 @@
             <div class="links-grid" id="links-container">
                 </div>
         </section>
-
-        <section id="widgets">
-            <div class="widgets-container">
-                <div class="widget-placeholder">
-                    <p>Widget-Bereich</p>
-                </div>
-            </div>
-        </section>
     </div>
 
     <div id="edit-overlay" class="edit-overlay hidden">
